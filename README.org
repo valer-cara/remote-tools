@@ -1,0 +1,11 @@
+* Remote tools
+
+** Open URL locally from remote emacs
+   * Run =python ./local.py= on your laptop
+   * When connecting to remote, make sure to forward a remote unix socket locally like =ssh you@remote -R /home/blk/remote.sock:/home/blk/local.sock=
+   * Add this to the emacs config
+   #+begin_src elisp
+     (setq browse-url-generic-program "/usr/sbin/python"
+           browse-url-generic-args '("/...../remote.py")
+           browse-url-browser-function 'browse-url-generic))))
+   #+end_src
