@@ -1,6 +1,7 @@
 * Remote tools
 
 ** Open URL locally from remote emacs
+   * SSH remote server configuration: add =StreamLocalBindUnlink yes= to =/etc/ssh/sshd_config=
    * Run =python ./local.py= on your laptop
    * When connecting to remote, make sure to forward a remote unix socket locally like =ssh you@remote -R /home/blk/remote.sock:/home/blk/local.sock=
    * Add this to the emacs config
@@ -9,3 +10,7 @@
            browse-url-generic-args '("/...../remote.py")
            browse-url-browser-function 'browse-url-generic))))
    #+end_src
+
+*** StreamLocalBindUnlink option
+    Unix sockets are fussy, they need to be =unlink()='ed after use. This option instructs the remote sshd to unlink =remote.sock= before trying to bind it again.
+    Without this option, remote forwarding will fail because the remote sshd will get an "address in use" error when trying to do it's thing and establish forwarding on it's end.
